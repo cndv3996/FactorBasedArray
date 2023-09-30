@@ -1,0 +1,8 @@
+{
+    "test": {
+        "printInsertionSteps": false,
+        "testDataLines": 60,
+        "printInputFactorsAndValues": false,
+        "printFinalFactorsAndValuesInArray": false
+    }
+}

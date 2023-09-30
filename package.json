@@ -1,0 +1,44 @@
+{
+  "name": "factor-based-array",
+  "description": "Insert a value together with a factor into the array. And the array will be kept sorted based on factors.",
+  "version": "1.0.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npm/cli.git"
+  },
+  "keywords": [
+    "sorted array",
+    "array in an order",
+    "ascending array",
+    "descending array",
+    "self-sorted array",
+    "factor based array"
+  ],
+  "homepage": "https://github.com/owner/project#readme",
+  "license": "BSD-3-Clause",
+  "funding": {
+    "type": "patreon",
+    "url": ""
+  },
+  "author": {
+    "name": "Davy Chen",
+    "email": "davy.chen@decentguys.cc",
+    "url": "http://barnyrubble.tumblr.com/"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.0",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "clean": "clean-scripts build --config clean-scripts.config.ts",
+    "build": "npm run clean && tsc",
+    "build:watch": "npm run clean && tsc --watch",
+    "test": "npm run build && node --trace-uncaught ./build/test/test.js",
+    "test-apis": "npm run build && node --trace-uncaught ./build/test/test-apis.js"
+  },
+  "dependencies": {
+    "@esbuild-kit/cjs-loader": "^2.4.4",
+    "clean-scripts": "^1.21.1"
+  }
+}
