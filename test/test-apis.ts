@@ -1,6 +1,6 @@
-import FactorBasedArray from "../src/index";
-import { verifyFactorsInRightOrder, verifyFactorsToValuesCorrespondence, feedArr, arrMatch, getRandomArr } from "./commonComponents";
-import generalConfig from "../general-config.json";
+import FactorBasedArray from "../src/index.js";
+import { verifyFactorsInRightOrder, verifyFactorsToValuesCorrespondence, feedArr, arrMatch, getRandomArr } from "./commonComponents.js";
+import generalConfig from "../general-config.json" assert { type: "json" };
 
 const testItems = [];
 const testResults = [];

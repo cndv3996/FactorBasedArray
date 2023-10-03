@@ -1,5 +1,5 @@
-import FactorBasedArray from "../src/index";
-import generalConfig from "../general-config.json";
+import FactorBasedArray from "../src/index.js";
+import generalConfig from "../general-config.json" assert { type: "json" };
 
 export const verifyFactorsInRightOrder = (testArr: FactorBasedArray, isAscending: boolean = true): boolean => {
     let isValid = true;
