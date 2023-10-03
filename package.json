@@ -35,10 +35,12 @@
     "build": "npm run clean && tsc",
     "build:watch": "npm run clean && tsc --watch",
     "test": "npm run build && node --trace-uncaught ./build/test/test.js",
-    "test-apis": "npm run build && node --trace-uncaught ./build/test/test-apis.js"
+    "test-apis": "npm run build && node --trace-uncaught ./build/test/test-apis.js",
+    "benchmark": "npm run build && node --trace-uncaught ./build/benchmark/benchmark.js"
   },
   "dependencies": {
     "@esbuild-kit/cjs-loader": "^2.4.4",
-    "clean-scripts": "^1.21.1"
+    "clean-scripts": "^1.21.1",
+    "perf_hooks": "^0.0.1"
   }
 }

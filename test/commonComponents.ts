@@ -1,6 +1,7 @@
 import FactorBasedArray from "../src/index.js";
 import generalConfig from "../general-config.json" assert { type: "json" };
 
+// Check if the elements in FactorBasedArray well arranged in its defined Ascending/Descending order
 export const verifyFactorsInRightOrder = (testArr: FactorBasedArray, isAscending: boolean = true): boolean => {
     let isValid = true;
     let preFactor;
@@ -19,6 +20,7 @@ export const verifyFactorsInRightOrder = (testArr: FactorBasedArray, isAscending
     return isValid;
 }
 
+// Check if a filled FactorBasedArray's each elements to be correspondent to original input values, indexed by factors
 export const verifyFactorsToValuesCorrespondence = (testArr: FactorBasedArray, inFactors: Array<number>, inValues: Array<number>): boolean => {
     let isValid = true;
     for (let i = 0; i < testArr.length; i++) {
@@ -32,6 +34,27 @@ export const verifyFactorsToValuesCorrespondence = (testArr: FactorBasedArray, i
         }
     }
     return isValid;
+}
+
+// Generate random factors and values only
+export const generateRandomData = (size: number) => {
+    let counter = 0;
+    const inValues = [];
+    const inFactors = [];
+
+    for (let i = 0; i < size; i++) {
+        const factor = Math.random();
+        inValues.push(counter);
+        inFactors.push(factor);
+        counter++;
+    }
+
+    const finalArr = {
+        inFactors: inFactors,
+        inValues: inValues
+    };
+
+    return finalArr;
 }
 
 // Insert random factors and values to FactorBasedArray
@@ -81,6 +104,22 @@ export const feedArr = (testArr: FactorBasedArray, size: number) => {
     return finalArr;
 }
 
+// Import factors and values to FactorBasedArray
+export const importArr = (testArr: FactorBasedArray, values: Array<number>, factors: Array<number>) => {
+    if (!values.length) {
+        throw("Empty input data.");
+    }
+
+    if (values.length !== factors.length) {
+        throw("Unmatched input values and factors dimension.");
+    }
+
+    for (let i = 0; i < values.length; i++) {
+        testArr.insert(values[i], factors[i]);
+    }
+}
+
+// Check equality of two Arrays
 export const arrMatch = (arr1: unknown[], arr2: unknown[]): boolean => {
     const arrString1 = JSON.stringify(arr1);
     const arrString2 = JSON.stringify(arr2);
@@ -88,6 +127,7 @@ export const arrMatch = (arr1: unknown[], arr2: unknown[]): boolean => {
     return isMatch;
 }
 
+// Get a sized FactorBasedArray filled with random data
 export const getRandomArr = (size: number): FactorBasedArray => {
     const arr = new FactorBasedArray();
     feedArr(arr, size);
