@@ -4,9 +4,9 @@
     "target": "ES6",
 
     /* Modules */
-    "module": "ESNext",
+    "module": "NodeNext",
     "rootDir": "./",
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "baseUrl": "./",
     "resolveJsonModule": true,
 

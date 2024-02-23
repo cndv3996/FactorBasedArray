@@ -1,14 +1,14 @@
 import FactorBasedArray from "../src/index.js";
 import generalConfig from "../general-config.json" assert { type: "json" };
 
-// Check if the elements in FactorBasedArray well arranged in its defined Ascending/Descending order
+// Check if the elements in FactorBasedArray well arranged in its defined Ascending order
 export const verifyFactorsInRightOrder = (testArr: FactorBasedArray, isAscending: boolean = true): boolean => {
     let isValid = true;
-    let preFactor;
+    let preFactor: number = 0;
     for (let i = 0; i < testArr.length; i++) {
-        const factor = testArr.factorAt(i);
-        const ascending = preFactor && factor > preFactor;
-        const descending = preFactor && factor < preFactor;
+        const factor = Number(testArr.factor(i));
+        const ascending = preFactor && (factor > preFactor);
+        const descending = preFactor && (factor < preFactor);
         // Allow equality
         if (ascending !== isAscending && descending === isAscending) {
             isValid = false;
@@ -24,11 +24,15 @@ export const verifyFactorsInRightOrder = (testArr: FactorBasedArray, isAscending
 export const verifyFactorsToValuesCorrespondence = (testArr: FactorBasedArray, inFactors: Array<number>, inValues: Array<number>): boolean => {
     let isValid = true;
     for (let i = 0; i < testArr.length; i++) {
-        const factor = testArr.factorAt(i);
-        const value = testArr[i] as number;
-        const factorMatches = factor === inFactors[value];
-        const valueMatches = value === inValues[value];
-        if (!factorMatches || !valueMatches) {
+        const factor = Number(testArr.factor(i));
+        const value = testArr.value(i);
+        const pos = inFactors.indexOf(factor);
+        if (pos === -1) {
+            isValid = false;
+            break;
+        }
+        const match = value === inValues[pos];
+        if (!match) {
             isValid = false;
             break;
         }
@@ -43,7 +47,7 @@ export const generateRandomData = (size: number) => {
     const inFactors = [];
 
     for (let i = 0; i < size; i++) {
-        const factor = Math.random();
+        const factor = getRandomFactor();
         inValues.push(counter);
         inFactors.push(factor);
         counter++;
@@ -57,6 +61,11 @@ export const generateRandomData = (size: number) => {
     return finalArr;
 }
 
+export const getRandomFactor = (): number => {
+    const factor = Math.floor(Math.random() * generalConfig.test.maxFactor);
+    return factor;
+}
+
 // Insert random factors and values to FactorBasedArray
 export const feedArr = (testArr: FactorBasedArray, size: number) => {
     let counter = 0;
@@ -68,14 +77,14 @@ export const feedArr = (testArr: FactorBasedArray, size: number) => {
     }
 
     for (let i = 0; i < size; i++) {
-        const factor = Math.random();
+        const factor = getRandomFactor();
         testArr.insert(counter, factor);
         inValues.push(counter);
         inFactors.push(factor);
         // Print insertion steps
         if (generalConfig.test.printInsertionSteps && i < generalConfig.test.testDataLines) {
             const factors = testArr.factors();
-            const values = testArr.slice();
+            const values = testArr.values();
             const factorsString = factors.join(", ");
             const valuesString = values.join(", ");
             const inputFactorsString = inFactors.join(", ");
@@ -121,8 +130,8 @@ export const importArr = (testArr: FactorBasedArray, values: Array<number>, fact
 
 // Check equality of two Arrays
 export const arrMatch = (arr1: unknown[], arr2: unknown[]): boolean => {
-    const arrString1 = JSON.stringify(arr1);
-    const arrString2 = JSON.stringify(arr2);
+    const arrString1 = arr1.join(", ");
+    const arrString2 = arr2.join(", ");
     const isMatch = arrString1 === arrString2;
     return isMatch;
 }
