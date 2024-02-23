@@ -1,7 +1,8 @@
 {
     "test": {
         "printInsertionSteps": false,
-        "testDataLines": 60,
+        "testDataLines": 600,
+        "maxFactor": 1000000000,
         "printInputFactorsAndValues": false,
         "printFinalFactorsAndValuesInArray": false
     }

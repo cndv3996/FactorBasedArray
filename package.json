@@ -23,17 +23,19 @@
   },
   "author": {
     "name": "Davy Chen",
-    "email": "davy.chen@decentguys.cc",
-    "url": "http://barnyrubble.tumblr.com/"
+    "email": "dawei.davy.chen@gmail.com",
+    "url": "http://davychxn.tumblr.com/"
   },
+  "main": "./build/src/index.js",
   "devDependencies": {
     "@types/node": "^20.6.0",
+    "rollup": "^4.11.0",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "clean": "clean-scripts build --config clean-scripts.config.ts",
-    "build": "npm run clean && tsc",
-    "build:watch": "npm run clean && tsc --watch",
+    "build": "npm run clean && tsc && rollup -c",
+    "build:watch": "npm run clean && tsc --watch && rollup -c",
     "test": "npm run build && node --trace-uncaught ./build/test/test.js",
     "test-apis": "npm run build && node --trace-uncaught ./build/test/test-apis.js",
     "benchmark": "npm run build && node --trace-uncaught ./build/benchmark/benchmark.js"
@@ -41,6 +43,7 @@
   "dependencies": {
     "@esbuild-kit/cjs-loader": "^2.4.4",
     "clean-scripts": "^1.21.1",
-    "perf_hooks": "^0.0.1"
+    "perf_hooks": "^0.0.1",
+    "rollup-plugin-dts": "^6.1.0"
   }
 }
