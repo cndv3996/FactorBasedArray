@@ -74,6 +74,72 @@ testResults.push(testResult);
 console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
 console.log("");
 
+// Test API deleteByFactor
+testItem = "Test API deleteByFactor";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr8 = new FactorBasedArray();
+feedArr(testArr8, generalConfig.test.basicTestDataLines);
+const factors10 = testArr8.factors();
+const values10 = testArr8.values();
+const index2 = Math.floor(testArr8.length * Math.random());
+testArr8.deleteByFactor(factors10[index2]);
+delete factors10[index2];
+delete values10[index2];
+const factors11 = testArr8.factors();
+const values11 = testArr8.values();
+const s1 = factors10.join(", ");
+const s2 = factors11.join(", ");
+const s3 = values10.join(", ");
+const s4 = values11.join(", ");
+const match12 = s1 === s2;
+const match15 = s3 === s4;
+if (!match12) {
+    testResult = false;
+    console.log(" -Element deleted factors not as expected.");
+}
+if (!match15) {
+    testResult = false;
+    console.log(" -Element deleted values not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
+
+// Test API deleteByIndex
+testItem = "Test API deleteByIndex";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr9 = new FactorBasedArray();
+feedArr(testArr9, generalConfig.test.basicTestDataLines);
+const factors12 = testArr9.factors();
+const values12 = testArr9.values();
+const index3 = Math.floor(testArr9.length * Math.random());
+testArr9.deleteByIndex(index3);
+delete factors12[index3];
+delete values12[index3];
+const factors15 = testArr9.factors();
+const values15 = testArr9.values();
+const s5 = factors12.join(", ");
+const s6 = factors15.join(", ");
+const s7 = values12.join(", ");
+const s8 = values15.join(", ");
+const match16 = s5 === s6;
+const match17 = s7 === s8;
+if (!match16) {
+    testResult = false;
+    console.log(" -Element deleted factors not as expected.");
+}
+if (!match17) {
+    testResult = false;
+    console.log(" -Element deleted values not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
+
 // Test API factors
 testItem = "Test API factors";
 testResult = true;
@@ -87,6 +153,26 @@ const match5 = arrMatch(factors5, factors6);
 if (!match5) {
     testResult = false;
     console.log(" -Factors returned not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
+
+// Test API indexOf
+testItem = "Test API indexOf";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr10 = new FactorBasedArray();
+feedArr(testArr10, generalConfig.test.basicTestDataLines);
+const index5 = Math.floor(testArr10.length * Math.random());
+const factor6 = testArr10.factor(index5);
+const index6 = testArr10.indexOf(factor6);
+const factor7 = testArr10.factor(index6);
+const match18 = factor6 === factor7;
+if (!match18) {
+    testResult = false;
+    console.log(" -Found index not as expected.");
 }
 testItems.push(testItem);
 testResults.push(testResult);

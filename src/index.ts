@@ -64,13 +64,29 @@ class FactorBasedArray<V = unknown, F = number> {
         return instance;
     }
 
-    // Del a certain Key-Value pair
-    del(index: number) {
+    // Del a certain Key-Value pair by factor
+    deleteByFactor(factor: F): boolean {
         this.syncDictToArr();
+        factor = this.validateFactor(factor);
+        const index = this._factors.indexOf(factor);
+        if (index === -1) {
+            return false;
+        }
+        this.deleteByIndex(index);
+        return true;
+    }
+
+    // Del a certain Key-Value pair by index
+    deleteByIndex(index: number): boolean {
+        this.syncDictToArr();
+        if (index < 0 || index >= this._values.length) {
+            return false;
+        }
         const factor = this._factors[index];
         delete this._factors[index];
         delete this._values[index];
         delete this._map[factor as number];
+        return true;
     }
 
     // Array and Factors length alignment check
@@ -102,8 +118,20 @@ class FactorBasedArray<V = unknown, F = number> {
         this.invalidData();
     }
 
+    // Get index of key-value pair by factor
+    indexOf(factor: F): number {
+        this.syncDictToArr();
+        return this._factors.indexOf(factor);
+    }
+
     // Insert an element into FactorBasedArray
     insert(value: V, factor: F): void {
+        factor = this.validateFactor(factor);
+        this._map[factor as number] = value;
+        this.invalidData();
+    }
+
+    private validateFactor(factor: F): F {
         if (!Number.isInteger(factor)) {
             const message = `${this.Error_Message_Factor_Fractional_Not_Acceptable}`;
             throw message;
@@ -114,8 +142,7 @@ class FactorBasedArray<V = unknown, F = number> {
             t1 = t1.substring(0, this.factorLengthLimit);
             factor = parseInt(t1) as F;
         }
-        this._map[factor as number] = value;
-        this.invalidData();
+        return factor;
     }
 
     // New data inserted into Dictionary. Needs to be synced to factors' and values' array
@@ -163,7 +190,10 @@ class FactorBasedArray<V = unknown, F = number> {
         }
         const factors = Object.keys(this._map) as string[];
         const values = Object.values(this._map) as V[];
-        this._factors = factors as F[];
+        const factors1 = factors.map(factor => {
+            return (parseInt(factor) as F);
+        });
+        this._factors = factors1;
         this._values = values as V[];
         this.isModified = false;
     }

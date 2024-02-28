@@ -5,7 +5,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/cli.git"
+    "url": "https://github.com/davychxn/FactorBasedArray.git"
   },
   "keywords": [
     "sorted array",
@@ -15,16 +15,16 @@
     "self-sorted array",
     "factor based array"
   ],
-  "homepage": "https://github.com/owner/project#readme",
+  "homepage": "https://github.com/davychxn/FactorBasedArray",
   "license": "BSD-3-Clause",
   "funding": {
     "type": "patreon",
-    "url": ""
+    "url": "https://www.patreon.com/davychxn"
   },
   "author": {
     "name": "Davy Chen",
     "email": "dawei.davy.chen@gmail.com",
-    "url": "http://davychxn.tumblr.com/"
+    "url": "https://www.linkedin.com/in/davychxn/"
   },
   "main": "./build/src/index.js",
   "devDependencies": {
