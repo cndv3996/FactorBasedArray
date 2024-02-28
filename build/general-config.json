@@ -1,0 +1,10 @@
+{
+    "test": {
+        "printInsertionSteps": false,
+        "testDataLines": 600,
+        "basicTestDataLines": 20,
+        "maxFactor": 1000000000,
+        "printInputFactorsAndValues": false,
+        "printFinalFactorsAndValuesInArray": false
+    }
+}

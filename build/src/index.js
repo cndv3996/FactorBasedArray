@@ -1,7 +1,12 @@
+// Main Class
 class FactorBasedArray {
     constructor(...args) {
+        // Dictionary to hold Key-Value pairs
         this._map = {};
+        // New data inserted to Dictionary
         this.isModified = true;
+        // According to limit in Object, its key couldn't have more than 9 digits
+        this.factorLengthLimit = 9;
         // Internal status messages
         this.Error_Message_Internal_Mismatch = "Internal data mismatch. Suggestion is to rebuild the array.";
         this.Error_Message_Factor_Fractional_Not_Acceptable = "Factor fractional not acceptable.";
@@ -31,11 +36,6 @@ class FactorBasedArray {
         }
         return;
     }
-    // Get a value by index
-    value(index) {
-        this.syncDictToArr();
-        return this._values[index];
-    }
     // Reset FactorBasedArray
     clear() {
         this._map = {};
@@ -50,12 +50,28 @@ class FactorBasedArray {
         const instance = new FactorBasedArray(values, factors);
         return instance;
     }
-    del(index) {
+    // Del a certain Key-Value pair by factor
+    deleteByFactor(factor) {
         this.syncDictToArr();
+        factor = this.validateFactor(factor);
+        const index = this._factors.indexOf(factor);
+        if (index === -1) {
+            return false;
+        }
+        this.deleteByIndex(index);
+        return true;
+    }
+    // Del a certain Key-Value pair by index
+    deleteByIndex(index) {
+        this.syncDictToArr();
+        if (index < 0 || index >= this._values.length) {
+            return false;
+        }
         const factor = this._factors[index];
         delete this._factors[index];
         delete this._values[index];
         delete this._map[factor];
+        return true;
     }
     // Array and Factors length alignment check
     doStabilityCheck() {
@@ -69,7 +85,7 @@ class FactorBasedArray {
         this.syncDictToArr();
         return this._factors[index];
     }
-    // Clone factors into an Array
+    // Get a factors' array copy
     factors() {
         this.syncDictToArr();
         return this._factors.slice();
@@ -82,10 +98,35 @@ class FactorBasedArray {
         }
         this.invalidData();
     }
+    // Get index of key-value pair by factor
+    indexOf(factor) {
+        this.syncDictToArr();
+        return this._factors.indexOf(factor);
+    }
+    // Insert an element into FactorBasedArray
+    insert(value, factor) {
+        factor = this.validateFactor(factor);
+        this._map[factor] = value;
+        this.invalidData();
+    }
+    validateFactor(factor) {
+        if (!Number.isInteger(factor)) {
+            const message = `${this.Error_Message_Factor_Fractional_Not_Acceptable}`;
+            throw message;
+        }
+        // Digits of keys for Object can't exceed factorLengthLimit
+        let t1 = factor.toString();
+        if (t1.length > this.factorLengthLimit) {
+            t1 = t1.substring(0, this.factorLengthLimit);
+            factor = parseInt(t1);
+        }
+        return factor;
+    }
+    // New data inserted into Dictionary. Needs to be synced to factors' and values' array
     invalidData() {
         this.isModified = true;
     }
-    // Set length of FactorBasedArray
+    // Get length of FactorBasedArray
     get length() {
         this.syncDictToArr();
         const length = this._values.length;
@@ -106,15 +147,6 @@ class FactorBasedArray {
         delete this._map[factor];
         return [value, factor];
     }
-    // Insert an element into FactorBasedArray
-    insert(value, factor) {
-        if (!Number.isInteger(factor)) {
-            const message = `${this.Error_Message_Factor_Fractional_Not_Acceptable}`;
-            throw message;
-        }
-        this._map[factor] = value;
-        this.invalidData();
-    }
     // Shift operation
     shift() {
         this.syncDictToArr();
@@ -130,25 +162,23 @@ class FactorBasedArray {
         }
         const factors = Object.keys(this._map);
         const values = Object.values(this._map);
-        this._factors = factors;
+        const factors1 = factors.map(factor => {
+            return parseInt(factor);
+        });
+        this._factors = factors1;
         this._values = values;
-        /*
-        const factors = [];
-        const values = [];
-        for (const key in this._map) {
-            factors.push(key);
-            values.push(this._map[key]);
-        }
-        this._factors = factors as F[];
-        this._values = values as V[];
-        //*/
         this.isModified = false;
     }
-    // Clone values into an Array
+    // Get a value by index
+    value(index) {
+        this.syncDictToArr();
+        return this._values[index];
+    }
+    // Get a values' array copy
     values() {
         this.syncDictToArr();
         return this._values.slice();
     }
 }
-
-export { FactorBasedArray as default };
+export default FactorBasedArray;
+//# sourceMappingURL=index.js.map
