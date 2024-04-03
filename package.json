@@ -1,7 +1,7 @@
 {
   "name": "factor-based-array",
   "description": "Insert a value together with a factor into the array. And the array will be kept sorted based on factors.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "repository": {
     "type": "git",
