@@ -147,14 +147,15 @@ class FactorBasedArray {
         delete this._map[factor];
         return [value, factor];
     }
-    // Get the position in Array where to insert the element
+    // Get the position in Array where the factor fits in
+    // Used Binary-Search algorithm
     indexOfFactor(factor) {
-        // If no elements exist, just insert
+        // If no elements exist, return default position
         if (this.length === 0) {
             return 0;
         }
         // 1. If only one element in the array
-        // 2. Inserting factor falls out of the existing elements' range of the array
+        // 2. Target factor position falls out of the existing elements' range of the array
         const afterStart = this.isInsertionAfter(0, factor);
         const afterEnd = this.isInsertionAfter(this._factors.length - 1, factor);
         if (afterStart === afterEnd) {
@@ -168,8 +169,8 @@ class FactorBasedArray {
                 return 0;
             }
         }
-        // Factor lies in exsiting range of the array, find the exact position to insert into
-        // With initial comparison range
+        // Factor lies in exsiting range of the array, find the exact position to fit in
+        // Binary-Search algorithm
         let start = 0;
         let end = this._factors.length - 1;
         let index = 0;
@@ -188,18 +189,18 @@ class FactorBasedArray {
                 end = mid - 1;
             }
         }
-        // Return insert position
+        // Return fitting in position
         index = end + 1;
         return index;
     }
-    // Tell to insert before or after the designated factor
+    // Tell to fit in before or after the designated factor
     isInsertionAfter(index, factor) {
         if (index < 0) {
-            // Out of bounds, insert before
+            // Out of bounds, fitting in before
             return false;
         }
         else if (index >= this._factors.length) {
-            // Out of bounds, insert after
+            // Out of bounds, fitting in after
             return true;
         }
         // Inside bounds
@@ -208,7 +209,9 @@ class FactorBasedArray {
         // Factors are ascending
         return greater;
     }
+    // [Useful API]
     // Remove elements before a certain Factor
+    // One usecase is to remove outdated timestamps together with linked values
     removeFront(factor) {
         this.syncDictToArr();
         const index = this.indexOfFactor(factor);
@@ -216,6 +219,7 @@ class FactorBasedArray {
         this._factors = this._factors.slice(index);
         this.fillArrToDict(this._values, this._factors);
     }
+    // [Useful API]
     // Remove elements after a certain Factor
     removeBack(factor) {
         this.syncDictToArr();
