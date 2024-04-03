@@ -67,8 +67,7 @@ You'll get:
 ```javascript
 // Only left valid timestamps with their linked values
 values: [
-  5,
-  4, 9, 10, 3, 6
+  5, 4, 9, 10, 3, 6
 ]
 factors: [
   171138240, 171440640,
