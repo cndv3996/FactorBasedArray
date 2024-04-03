@@ -24,6 +24,10 @@ declare class FactorBasedArray<V = unknown, F = number> {
     get length(): number;
     set length(length: number);
     pop(): [V, F];
+    indexOfFactor(factor: F): number;
+    isInsertionAfter(index: number, factor: F): boolean;
+    removeFront(factor: F): void;
+    removeBack(factor: F): void;
     shift(): [V, F];
     private syncDictToArr;
     value(index: number): V | undefined;

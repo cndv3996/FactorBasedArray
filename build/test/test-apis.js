@@ -227,6 +227,50 @@ testItems.push(testItem);
 testResults.push(testResult);
 console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
 console.log("");
+// Test API removeFront
+testItem = "Test API removeFront";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr11 = new FactorBasedArray();
+const results3 = feedArr(testArr11, generalConfig.test.testDataLines);
+// Get a random factor
+const index7 = Math.floor(Math.random() * generalConfig.test.testDataLines * 0.6) +
+    Math.floor(generalConfig.test.testDataLines * 0.2);
+// Make a factor greater than above selected random factor in the array
+const factor8 = testArr11.factor(index7) + 1;
+testArr11.removeFront(factor8);
+const len1 = generalConfig.test.testDataLines - index7 - 1;
+const match19 = len1 === testArr11.length;
+if (!match19) {
+    testResult = false;
+    console.log(" -Results not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
+// Test API removeBack
+testItem = "Test API removeBack";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr12 = new FactorBasedArray();
+const results4 = feedArr(testArr12, generalConfig.test.testDataLines);
+// Get a random factor
+const index8 = Math.floor(Math.random() * generalConfig.test.testDataLines * 0.6) +
+    Math.floor(generalConfig.test.testDataLines * 0.2);
+// Make a factor greater than above selected random factor in the array
+const factor9 = testArr12.factor(index8) + 1;
+testArr12.removeBack(factor9);
+const len2 = index8 + 1;
+const match20 = len2 === testArr12.length;
+if (!match20) {
+    testResult = false;
+    console.log(" -Results not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
 // Test API shift
 testItem = "Test API shift";
 testResult = true;

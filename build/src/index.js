@@ -147,6 +147,83 @@ class FactorBasedArray {
         delete this._map[factor];
         return [value, factor];
     }
+    // Get the position in Array where to insert the element
+    indexOfFactor(factor) {
+        // If no elements exist, just insert
+        if (this.length === 0) {
+            return 0;
+        }
+        // 1. If only one element in the array
+        // 2. Inserting factor falls out of the existing elements' range of the array
+        const afterStart = this.isInsertionAfter(0, factor);
+        const afterEnd = this.isInsertionAfter(this._factors.length - 1, factor);
+        if (afterStart === afterEnd) {
+            // Not in the range of the Array
+            if (afterEnd) {
+                // End of the Array
+                return this._factors.length;
+            }
+            else {
+                // Start of the Array
+                return 0;
+            }
+        }
+        // Factor lies in exsiting range of the array, find the exact position to insert into
+        // With initial comparison range
+        let start = 0;
+        let end = this._factors.length - 1;
+        let index = 0;
+        while (start <= end) {
+            const mid = Math.floor((start + end) * 0.5);
+            // If K is found
+            if (this._factors[mid] === factor) {
+                index = mid;
+                break;
+            }
+            const fallAfter = (this._factors[mid] < factor);
+            if (fallAfter) {
+                start = mid + 1;
+            }
+            else {
+                end = mid - 1;
+            }
+        }
+        // Return insert position
+        index = end + 1;
+        return index;
+    }
+    // Tell to insert before or after the designated factor
+    isInsertionAfter(index, factor) {
+        if (index < 0) {
+            // Out of bounds, insert before
+            return false;
+        }
+        else if (index >= this._factors.length) {
+            // Out of bounds, insert after
+            return true;
+        }
+        // Inside bounds
+        const target = this._factors[index];
+        const greater = target < factor;
+        // Factors are ascending
+        return greater;
+    }
+    // Remove elements before a certain Factor
+    removeFront(factor) {
+        this.syncDictToArr();
+        const index = this.indexOfFactor(factor);
+        this._values = this._values.slice(index);
+        this._factors = this._factors.slice(index);
+        this.fillArrToDict(this._values, this._factors);
+    }
+    // Remove elements after a certain Factor
+    removeBack(factor) {
+        this.syncDictToArr();
+        const index = this.indexOfFactor(factor);
+        this._values = this._values.slice(0, index);
+        this._factors = this._factors.slice(0, index);
+        this.fillArrToDict(this._values, this._factors);
+    }
     // Shift operation
     shift() {
         this.syncDictToArr();

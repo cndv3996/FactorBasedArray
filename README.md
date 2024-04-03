@@ -54,6 +54,29 @@ factors: [
 ]
 
 ```
+[USEFUL API & USECASE]:
+```javascript
+// Remove outdated timestamps (slightly larger than the 4th factor: 171017280)
+testArr.removeFront(171017281);
+
+console.info(values);
+console.info(factors);
+
+```
+You'll get:
+```javascript
+// Only left valid timestamps with their linked values
+values: [
+  5,
+  4, 9, 10, 3, 6
+]
+factors: [
+  171138240, 171440640,
+  171570240, 171734400,
+  172918080, 172935360
+]
+
+```
 Why the input factors look being relatively short? What if the factors to be longer? Say, more than 10 digits?
 Cause we use an Object to work as Dictionary to keep factors ordered.
 
