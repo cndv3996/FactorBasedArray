@@ -168,6 +168,37 @@ testItems.push(testItem);
 testResults.push(testResult);
 console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
 console.log("");
+// Test API indexOfFactor
+testItem = "Test API indexOfFactor";
+testResult = true;
+console.log(`*${testItem}: `);
+const testArr13 = new FactorBasedArray();
+const results5 = feedArr(testArr13, generalConfig.test.testDataLines);
+// Get a random factor
+const index9 = Math.floor(Math.random() * generalConfig.test.testDataLines * 0.6) +
+    Math.floor(generalConfig.test.testDataLines * 0.2);
+// Make a factor greater than above selected random factor in the array
+const factor10 = testArr13.factor(index9) + 1;
+const index10 = testArr13.indexOfFactor(factor10);
+const match21 = testArr13.factor(index10 - 1) < factor10;
+const match22 = testArr13.factor(index10) >= factor10;
+const match23 = testArr13.factor(index10 + 1) > factor10;
+if (!match21) {
+    testResult = false;
+    console.log(" -Results not as expected.");
+}
+if (!match22) {
+    testResult = false;
+    console.log(" -Results not as expected.");
+}
+if (!match23) {
+    testResult = false;
+    console.log(" -Results not as expected.");
+}
+testItems.push(testItem);
+testResults.push(testResult);
+console.log(` ${testItem}: `, testResult ? "Pass" : "Fail");
+console.log("");
 // Test API insert
 testItem = "Test API insert";
 testResult = true;
